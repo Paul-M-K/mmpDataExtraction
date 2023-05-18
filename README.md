@@ -16,6 +16,9 @@ The games will be sorted into the appropriate folders within Onion OS. Although 
 By achieving these goals, I aim to enhance the user experience of the Miyoo Mini Plus by ensuring that the vast game library is properly organized and easily accessible.
 
 ## Data Extraction
-Step 1 was relatively simple to perform. I utilized Python and the OS module to create a code that traversed the directory of the Miyoo Mini Plus Roms folder. This code effectively sorted each game based on its directory structure. For instance, if the file path was "G:\Roms\SNES\Fake Game Name.zip," the code would identify the console as SNES and label the game as Fake Game Name.zip. However, there were some exceptions due to the presence of several subfolders. To handle these exceptions, if statements were implemented to facilitate folder parsing.
+**Step 1** was relatively simple to perform. I utilized Python and the OS module to create a code that traversed the directory of the Miyoo Mini Plus Roms folder. This code effectively sorted each game based on its directory structure. For instance, if the file path was "G:\Roms\SNES\Fake Game Name.zip," the code would identify the console as SNES and label the game as Fake Game Name.zip. However, there were some exceptions due to the presence of several subfolders. To handle these exceptions, if statements were implemented to facilitate folder parsing.
 
 You can access an Excel file containing all the game names included with the Miyoo Mini Plus 64GB model [here](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2FPaul-M-K%2FmmpDataExtraction%2Fmaster%2Fparsed_data.xlsx&wdOrigin=BROWSELINK). Please note that this file specifically lists the game names and does not include the actual game files.
+
+## Data Integration
+I want to 
