@@ -21,4 +21,6 @@ By achieving these goals, I aim to enhance the user experience of the Miyoo Mini
 You can access an Excel file containing all the game names included with the Miyoo Mini Plus 64GB model [here](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2FPaul-M-K%2FmmpDataExtraction%2Fmaster%2Fparsed_data.xlsx&wdOrigin=BROWSELINK). Please note that this file specifically lists the game names and does not include the actual game files.
 
 ## Data Integration
-I want to 
+1) I want to use the excel file that was created to Pull all the Console data from the API. 
+- Get id numbers for all consoles.
+2) Use console id and game name to get user rating and rating count. 

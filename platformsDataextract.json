@@ -1,0 +1,253 @@
+{
+    "platform_details": [
+        [
+            {
+                "id": 18,
+                "abbreviation": "NES",
+                "alternative_name": "NES",
+                "category": 1,
+                "created_at": 1297941636,
+                "generation": 3,
+                "name": "Nintendo Entertainment System",
+                "platform_logo": 229,
+                "platform_family": 5,
+                "slug": "nes",
+                "updated_at": 1660212114,
+                "url": "https://www.igdb.com/platforms/nes",
+                "versions": [
+                    53,
+                    175
+                ],
+                "checksum": "e5286baa-27cd-f24d-bf1a-f37abb776219"
+            }
+        ],
+        [
+            {
+                "id": 33,
+                "abbreviation": "Game Boy",
+                "alternative_name": "GB",
+                "category": 5,
+                "created_at": 1302342089,
+                "generation": 4,
+                "name": "Game Boy",
+                "platform_logo": 274,
+                "platform_family": 5,
+                "slug": "gb",
+                "updated_at": 1633117153,
+                "url": "https://www.igdb.com/platforms/gb",
+                "versions": [
+                    39,
+                    181,
+                    182
+                ],
+                "checksum": "1561d675-66fa-4a0e-7618-0f496a3f2909"
+            }
+        ],
+        [
+            {
+                "id": 22,
+                "abbreviation": "GBC",
+                "alternative_name": "GBC",
+                "category": 5,
+                "created_at": 1300187960,
+                "generation": 5,
+                "name": "Game Boy Color",
+                "platform_logo": 273,
+                "platform_family": 5,
+                "slug": "gbc",
+                "updated_at": 1628498928,
+                "url": "https://www.igdb.com/platforms/gbc",
+                "versions": [
+                    41
+                ],
+                "checksum": "ecd1db6f-8e22-bba6-a2d4-6b33cb5c2682"
+            }
+        ],
+        [
+            {
+                "id": 24,
+                "abbreviation": "GBA",
+                "alternative_name": "GBA",
+                "category": 5,
+                "created_at": 1300147200,
+                "generation": 6,
+                "name": "Game Boy Advance",
+                "platform_logo": 255,
+                "platform_family": 5,
+                "slug": "gba",
+                "updated_at": 1471478400,
+                "url": "https://www.igdb.com/platforms/gba",
+                "versions": [
+                    40,
+                    193,
+                    194
+                ],
+                "checksum": "2741e85f-e65d-4668-6cdb-36fca54e5dd4"
+            }
+        ],
+        [
+            {
+                "id": 35,
+                "abbreviation": "Game Gear",
+                "alternative_name": "GG",
+                "category": 5,
+                "created_at": 1303933831,
+                "generation": 4,
+                "name": "Sega Game Gear",
+                "platform_logo": 287,
+                "platform_family": 3,
+                "slug": "gamegear",
+                "updated_at": 1633117184,
+                "url": "https://www.igdb.com/platforms/gamegear",
+                "versions": [
+                    62
+                ],
+                "checksum": "54cd82ec-c45b-f5d7-baae-97b94344e716"
+            }
+        ],
+        [
+            {
+                "id": 29,
+                "abbreviation": "Genesis/MegaDrive",
+                "alternative_name": "Sega Genesis",
+                "category": 1,
+                "created_at": 1300959838,
+                "generation": 4,
+                "name": "Sega Mega Drive/Genesis",
+                "platform_logo": 293,
+                "platform_family": 3,
+                "slug": "genesis-slash-megadrive",
+                "updated_at": 1670168290,
+                "url": "https://www.igdb.com/platforms/genesis-slash-megadrive",
+                "versions": [
+                    64
+                ],
+                "checksum": "f5cda40e-2331-62ed-851c-8133d7743957"
+            }
+        ],
+        [
+            {
+                "id": 80,
+                "abbreviation": "neogeoaes",
+                "alternative_name": "AES",
+                "category": 1,
+                "created_at": 1392076800,
+                "generation": 4,
+                "name": "Neo Geo AES",
+                "platform_logo": 69,
+                "slug": "neogeoaes",
+                "updated_at": 1399680000,
+                "url": "https://www.igdb.com/platforms/neogeoaes",
+                "versions": [
+                    82
+                ],
+                "checksum": "496c2bad-bcc8-ebda-a3c9-2756cffd7f1d"
+            }
+        ],
+        [
+            {
+                "id": 119,
+                "alternative_name": "NGP",
+                "category": 5,
+                "created_at": 1441269219,
+                "generation": 5,
+                "name": "Neo Geo Pocket",
+                "platform_logo": 390,
+                "slug": "neo-geo-pocket",
+                "updated_at": 1633117169,
+                "url": "https://www.igdb.com/platforms/neo-geo-pocket",
+                "versions": [
+                    157
+                ],
+                "checksum": "c0ff62cb-db50-1c63-765f-b470e0393069"
+            }
+        ],
+        [
+            {
+                "id": 86,
+                "abbreviation": "turbografx16",
+                "category": 1,
+                "created_at": 1400803200,
+                "generation": 4,
+                "name": "TurboGrafx-16/PC Engine",
+                "platform_logo": 296,
+                "slug": "turbografx16--1",
+                "updated_at": 1441152000,
+                "url": "https://www.igdb.com/platforms/turbografx16--1",
+                "versions": [
+                    99
+                ],
+                "checksum": "a865ae03-6878-7704-642b-b2fa9e99389b"
+            }
+        ],
+        [
+            {
+                "id": 7,
+                "abbreviation": "PS1",
+                "alternative_name": "PSX, PSOne, PS",
+                "category": 1,
+                "created_at": 1297639288,
+                "generation": 5,
+                "name": "PlayStation",
+                "platform_logo": 278,
+                "platform_family": 1,
+                "slug": "ps",
+                "updated_at": 1633117147,
+                "url": "https://www.igdb.com/platforms/ps",
+                "versions": [
+                    57
+                ],
+                "checksum": "b6644b7a-e4ba-7cd8-4a42-3176f9a1c053"
+            }
+        ],
+        [
+            {
+                "id": 19,
+                "abbreviation": "SNES",
+                "alternative_name": "SNES, Super Nintendo",
+                "category": 1,
+                "created_at": 1297941647,
+                "generation": 4,
+                "name": "Super Nintendo Entertainment System",
+                "platform_logo": 535,
+                "platform_family": 5,
+                "slug": "snes",
+                "updated_at": 1660212083,
+                "url": "https://www.igdb.com/platforms/snes",
+                "versions": [
+                    68,
+                    95,
+                    97,
+                    139,
+                    177,
+                    391
+                ],
+                "websites": [
+                    209
+                ],
+                "checksum": "8b2b4298-17ca-05a6-8420-26d6fca32a8a"
+            }
+        ],
+        [
+            {
+                "id": 57,
+                "abbreviation": "WonderSwan",
+                "alternative_name": "WS",
+                "category": 5,
+                "created_at": 1342290746,
+                "generation": 5,
+                "name": "WonderSwan",
+                "platform_logo": 263,
+                "slug": "wonderswan",
+                "updated_at": 1633117139,
+                "url": "https://www.igdb.com/platforms/wonderswan",
+                "versions": [
+                    76,
+                    84,
+                    117
+                ],
+                "checksum": "f4e5369d-6ddc-59db-c2c8-df1dc4ad2cec"
+            }
+        ]
+    ]
+}
