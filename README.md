@@ -24,3 +24,8 @@ You can access an Excel file containing all the game names included with the Miy
 1) I want to use the excel file that was created to Pull all the Console data from the API. 
 - Get id numbers for all consoles.
 2) Use console id and game name to get user rating and rating count. 
+
+
+## Notes for me.
+
+mmp_RenameFilesForApiCalls is only functioning with a Test file, not the original roms folder. This will need to be modified so it can directly look at the roms folder. 
