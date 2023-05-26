@@ -1,20 +1,30 @@
 import os
 
-filesRename = ['demo_1.txt', 'demo_2.txt', 'demo_3.txt',]
-folder = "C:\\Users\\pauru\\source\\GBA"
+# will need to change this.
+folder = "C:\\Users\\pauru\\source\\GBATest" 
 
-# Iterate
 for file in os.listdir(folder):
-	# Checking if the file is present in the list
-	if file in filesRename:
-		oldName = os.path.join(folder, file)
-		n = os.path.splitext(file)[0]
+    # split file names into a list
+    file_split = file.split(" ")
+    try:
+        #check to make sure the first string can be converted to an int. (this is typical for MMP)
+        type(int(file_split[0])) == int
+        # check the length of the string, it is always 001 for example.
+        if len(file_split[0]) == 3:
+            # pop the number off
+            popped = file_split.pop(0)
+            # join the strings back together without the number
+            name_split = ' '.join(map(str,file_split))
+            # get old path and old name. 
+            old_file = os.path.join(folder,file)
+            # get old path and new name.
+            new_file = os.path.join(folder,name_split)
+            # check if the file does not exist
+            if not os.path.exists(new_file):
+                # rename game.
+                os.rename(old_file, new_file)
+    except ValueError:
+        # Can't look at files with out the exeptions above so skip.
+        print("Not an int")
 
-		b = n + '_new' + '.txt'
-		newName = os.path.join(folder, b)
-
-		# Rename the file
-		os.rename(oldName, newName)
-
-res = os.listdir(folder)
-print(res)
+    
