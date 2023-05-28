@@ -5,6 +5,7 @@
 from requests import post
 import json
 import os
+import pandas as pd
 
 # Opening JSON file
 f = open('platforms.json')
@@ -42,15 +43,27 @@ def write_json(new_data, filename=file_path):
 
 # iterating though the json list
 
-
+combined_list = []
 for i in data:
     consoleName = str(i['name'])
     response = post('https://api.igdb.com/v4/platforms/',
                     **{'headers': {'Client-ID': 'yizntsh128hmthcof1qurn2eashnvm',
                                    'Authorization': 'Bearer lkvqnflz33l1bybwvqn1nuotoixt42'},
                        'data': 'fields *; where name = "{}";'.format(consoleName)})
+    combined_list.append(response.json())
+    # test = pd.DataFrame(pd.json_normalize(response.json()))
+    # print(test.to_json())
+    
     # print(response)
-    write_json(response.json())
+    # write_json(test.to_json().json())
+# print(combined_list)
+# Flatten the combined response to remove the outer brackets
+flattened_response = [item for sublist in combined_list for item in sublist]
+# Convert the flattened response to JSON format
+json_data = json.dumps(flattened_response)
+print(json_data)
+write_json(json_data)
+
 
 # print(consoleDict)
 
