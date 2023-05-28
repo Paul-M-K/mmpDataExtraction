@@ -34,8 +34,6 @@ for platform in platforms_data:
     }
     data = f'fields *; where name = "{console_name}";'
     response = requests.post(url, headers=headers, data=data)
-    print(response.json())
-    time.sleep(0.25)
     
     # Append the response data to the combined list
     combined_list.append(response.json())
