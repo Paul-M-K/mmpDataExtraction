@@ -3,6 +3,7 @@ from requests import post
 import time
 import json
 import os
+import matplotlib as plt
 
 # need to use platforms data extraction id's to get a list off all the raitings for all their associated games. 
 
