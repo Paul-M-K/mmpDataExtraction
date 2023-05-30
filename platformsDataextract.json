@@ -2,7 +2,7 @@
     {
         "id": 18,
         "abbreviation": "NES",
-        "alternative_name": "NES",
+        "alternative_name": "FC",
         "category": 1,
         "created_at": 1297941636,
         "generation": 3,
@@ -97,7 +97,7 @@
     {
         "id": 29,
         "abbreviation": "Genesis/MegaDrive",
-        "alternative_name": "Sega Genesis",
+        "alternative_name": "MD",
         "category": 1,
         "created_at": 1300959838,
         "generation": 4,
@@ -115,7 +115,7 @@
     {
         "id": 80,
         "abbreviation": "neogeoaes",
-        "alternative_name": "AES",
+        "alternative_name": "NEOGEO",
         "category": 1,
         "created_at": 1392076800,
         "generation": 4,
@@ -148,6 +148,7 @@
     {
         "id": 86,
         "abbreviation": "turbografx16",
+        "alternative_name": "PCE",
         "category": 1,
         "created_at": 1400803200,
         "generation": 4,
@@ -164,7 +165,7 @@
     {
         "id": 7,
         "abbreviation": "PS1",
-        "alternative_name": "PSX, PSOne, PS",
+        "alternative_name": "PS",
         "category": 1,
         "created_at": 1297639288,
         "generation": 5,
@@ -182,7 +183,7 @@
     {
         "id": 19,
         "abbreviation": "SNES",
-        "alternative_name": "SNES, Super Nintendo",
+        "alternative_name": "SNES",
         "category": 1,
         "created_at": 1297941647,
         "generation": 4,
