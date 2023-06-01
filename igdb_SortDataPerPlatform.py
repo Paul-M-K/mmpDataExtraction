@@ -34,7 +34,29 @@ for console in console_data:
 df = pd.DataFrame(matching_games_list)
 
 # Print the DataFrame
-print(df)
+# print(df)
 
+# Iterate over unique groups
+for group_value in df['Console ID'].unique():
+    group_data = df[df['Console ID'] == group_value]  # Extract the data for the current group
+    
+    # Evaluate the group based on your criteria
+    # Example: Calculate the mean of a specific column
+    group_mean = group_data['rating'].mean()
+    group_sum = group_data['rating_count'].sum()
+
+    df = df.assign(weighted_rating = (df['rating']*df['rating_count'])/group_sum)
+    
+    # Print or perform any other desired actions with the evaluated group
+    # print(f"Group {group_value}: Mean = {group_mean}: Sum = {group_sum}")
+
+# Sort the DataFrame by 'ValueColumn' in descending order while keeping the groups intact
+df_sorted = df.sort_values(by=['Console ID', 'weighted_rating'], ascending=[True, False])
+
+# Remove duplicate rows based on all columns
+df_no_duplicates = df_sorted.drop_duplicates()
+
+
+print(df_no_duplicates)
 # Save the DataFrame to a CSV file
-df.to_csv('matching_games.csv', index=False)
+df_no_duplicates.to_csv('matching_games.csv', index=False)
