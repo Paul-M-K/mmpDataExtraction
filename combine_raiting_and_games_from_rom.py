@@ -1,6 +1,7 @@
 import os
 import json
 import pandas as pd
+import roman
 import math
 import re
 from openpyxl import Workbook
@@ -138,7 +139,8 @@ games['Game Name'] = games['Game Name'].str.strip()
 games['Game Name'] = games['Game Name'].str.replace(r"\s*\([UJ]\)", '', regex=True)
 
 # fix Pokemon for incoming ratings data
-ratings['Game Name'] = ratings['Game Name'].str.replace("Ã©", "e")
+ratings['Game Name'] = ratings['Game Name'].str.replace("é", "e")
+
 
 
 # remove any odd characters.
@@ -147,45 +149,36 @@ characters_to_remove = r"!@#$%^&*()-_=+[:;\"{,}].<>/?'"
 games['Game Name'] = games['Game Name'].apply(lambda x: re.sub(f"[{re.escape(characters_to_remove)}]", ' ', x).strip())
 ratings['Game Name'] = ratings['Game Name'].apply(lambda x: re.sub(f"[{re.escape(characters_to_remove)}]", ' ', x).strip())
 
-games.to_csv('games.csv', index=False)
-ratings.to_csv('ratings.csv', index=False)
+def convert_last_roman_to_number(string):
+    parts = string.split()
+    last_part = parts[-1]
+    try:
+        converted_part = str(roman.fromRoman(last_part))
+        parts[-1] = converted_part
+    except roman.InvalidRomanNumeralError:
+        pass
+    return ' '.join(parts)
+
+ratings['Game Name'] = ratings['Game Name'].apply(convert_last_roman_to_number)
+
+games.to_excel('games.csv', index=False)
+ratings.to_excel('ratings.csv', index=False)
 
 # Remove three-digit numbers from "Game Name" column
 games['Game Name'] = games['Game Name'].apply(lambda x: x.split(maxsplit=1)[1] if len(x.split(maxsplit=1)[0]) == 3 and x.split(maxsplit=1)[0].isdigit() else x)
-# print(games['Game Name'])
-# games['Game Name'] = games['Game Name'].apply(lambda x: x.lstrip('0123456789') if x[:3].isdigit() else x)
-# games['Game Name'] = games.apply(lambda row: row['Game Name'].lstrip('0123456789') if row['Game Name'][:3].isdigit() else row['Game Name'], axis=1)
-# games.loc[games['Console Name'] == 'PS', 'Game Name'] = games.loc[games['Console Name'] == 'PS', 'Game Name'].apply(lambda x: x[:2] if len(x) == 2 else x)
-
 
 # Merge the data frames based on matching values
 merged_df = pd.merge(games, ratings, left_on=['Console Name', 'Console Name'], right_on=['Console Name', 'Console Name'])
 
 
-# Define the characters to remove
-# characters_to_remove = "!@#$%^&*()-_=+[:;\"{,}].<>/?"
-
-# # Remove specific characters from the 'Game Name_y' column
-# merged_df['Game Name_x'] = merged_df['Game Name_x'].str.replace(f"[{characters_to_remove}]", ' ', regex=True).str.strip()
-# merged_df['Game Name_y'] = merged_df['Game Name_y'].str.replace(f"[{characters_to_remove}]", ' ', regex=True).str.strip()
-
-
-# Calculate the similarity between the "Game" and "Game Name" columns
-
-# def calculate_similarity(row):
-#     if isinstance(row['Game Name_x'], str) and isinstance(row['Game Name_y'], str):
-#         return fuzz.ratio(row['Game Name_x'], row['Game Name_y'])
-#     else:
-#         return math.nan
-
-# merged_df['similarity'] = merged_df.apply(calculate_similarity, axis=1)
 
 merged_df['similarity'] = merged_df.apply(lambda row: fuzz.ratio(row['Game Name_x'], row['Game Name_y']), axis=1)
-merged_df.to_csv('merged_df.csv', index=False)
+merged_df = merged_df[merged_df['similarity'] > 0]
+merged_df.to_excel('merged_df.csv', index=False)
 # Sort the DataFrame by 'similarity' column in descending order
 sorted_df = merged_df.sort_values('similarity', ascending=False)
 sorted_df = sorted_df[sorted_df['similarity'] > 60]
-sorted_df.to_csv('sorted_df.csv', index=False)
+sorted_df.to_excel('sorted_df.csv', index=False)
 print(sorted_df)
 
 # Group the DataFrame by the unique combinations of 'Game Name_x' and 'Game Name_y'
@@ -203,7 +196,7 @@ for group_name, group_data in grouped_df:
 
 # Print the filtered DataFrame
 # print(filtered_df)
-filtered_df.to_csv('filtered_df.csv', index=False)
+filtered_df.to_excel('filtered_df.csv', index=False)
 
 # Filter the rows where similarity is above 95%
 # similarity_df = sorted_df[merged_df['similarity'] > 60]
@@ -220,7 +213,7 @@ filtered_df.to_csv('filtered_df.csv', index=False)
 # print(games)
 
 # Print the filtered DataFrame
-# filtered_df.to_csv('test.csv', index=False)
+# filtered_df.to_excel('test.csv', index=False)
 # print(merged_df)
 
 
