@@ -2,8 +2,9 @@ import os
 import json
 import pandas as pd
 import roman
-import math
 import re
+import enchant
+import math
 from spellchecker import SpellChecker
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
@@ -11,6 +12,9 @@ from fuzzywuzzy import fuzz
 
 # will need to change this.
 directory = "C:\\Users\\pauru\\Desktop\\My Folder\\miyoo mini\\Roms" 
+
+# Initialize the spell checker keep for furture referance
+# spell_checker = enchant.Dict("en_US")
 
 def parse_data(directory):
     data = []
@@ -125,8 +129,15 @@ with open(ratings_file_path) as ratings_file:
 games = pd.DataFrame(games_data)
 ratings = pd.DataFrame(ratings_data)
 
+# Remove three-digit numbers from "Game Name" column
+games['Game Name'] = games['Game Name'].apply(lambda x: x.split(maxsplit=1)[1] if len(x.split(maxsplit=1)[0]) == 3 and x.split(maxsplit=1)[0].isdigit() else x)
+
+# make an exeption for play station because it is only 2 numbers foe their naming convention.
+games['Game Name'] = games.apply(lambda row: row['Game Name'].split(maxsplit=1)[1] if row['Console Name'] == 'PS' and len(row['Game Name'].split(maxsplit=1)[0]) == 2 and row['Game Name'].split(maxsplit=1)[0].isdigit() else row['Game Name'], axis=1)
+
 # Duplicate Original File name for retaining data.
 games['Original Name'] = games['Game Name']
+# ratings['Original Name'] = ratings['Game Name']
 
 # Drop duplicate data in both data frames
 games = games.drop_duplicates()
@@ -143,64 +154,22 @@ games['Game Name'] = games['Game Name'].str.replace(r"\s*\([UJ]\)", '', regex=Tr
 # fix Pokemon for incoming ratings data
 ratings['Game Name'] = ratings['Game Name'].str.replace("é", "e")
 
+# make all lower case
+games['Game Name'] = games['Game Name'].str.lower()
+ratings['Game Name'] = ratings['Game Name'].str.lower()
+
 # remove words like the
-games['Game Name'] = games['Game Name'].str.replace("the", " ")
-ratings['Game Name'] = ratings['Game Name'].str.replace("the", " ")
+games['Game Name'] = games['Game Name'].str.replace("the ", " ")
+ratings['Game Name'] = ratings['Game Name'].str.replace("the ", " ")
+
+# replace & with and
+games['Game Name'] = games['Game Name'].str.replace("&", "and")
+ratings['Game Name'] = ratings['Game Name'].str.replace("&", "and")
 
 # Define the characters to remove
-characters_to_remove = r"!@#$%^&*()-_=+[:;\"{,}].<>/?'"
+characters_to_remove = r"!@#$%^*()-_=+[:;\"{,}].<>/?'"
 games['Game Name'] = games['Game Name'].apply(lambda x: re.sub(f"[{re.escape(characters_to_remove)}]", ' ', x).strip())
 ratings['Game Name'] = ratings['Game Name'].apply(lambda x: re.sub(f"[{re.escape(characters_to_remove)}]", ' ', x).strip())
-
-
-def correct_spelling(input_string):
-    spell_checker = SpellChecker()
-    corrected_string = ""
-
-    # Split the input string into individual words
-    words = input_string.split()
-
-    # Check and correct the spelling of each word
-    for word in words:
-        # Get the corrected version of the word if it is misspelled
-        corrected_word = spell_checker.correction(word)
-
-        # Check if a valid correction is found
-        if corrected_word is not None:
-            # Add the corrected word to the corrected string
-            corrected_string += corrected_word + " "
-        else:
-            # If no valid correction is found, keep the original word
-            corrected_string += word + " "
-
-    # Remove the trailing space
-    corrected_string = corrected_string.strip()
-
-    return corrected_string
-
-def convert_last_roman_to_number(string):
-    parts = string.split()
-    last_part = parts[-1]
-    try:
-        converted_part = str(roman.fromRoman(last_part))
-        parts[-1] = converted_part
-    except roman.InvalidRomanNumeralError:
-        pass
-    return ' '.join(parts)
-
-def add_number_if_missing(string):
-    # Check if the string ends with a number
-    if not re.search(r'\d$', string):
-        # Append "1" to the string
-        string += "1"
-    return string
-
-ratings['Game Name'] = ratings['Game Name'].apply(correct_spelling)
-games['Game Name'] = games['Game Name'].apply(correct_spelling)
-ratings['Game Name'] = ratings['Game Name'].apply(convert_last_roman_to_number)
-games['Game Name'] = games['Game Name'].apply(convert_last_roman_to_number)
-games['Game Name'] = games['Game Name'].apply(add_number_if_missing)
-ratings['Game Name'] = ratings['Game Name'].apply(add_number_if_missing)
 
 games.to_csv('games.csv', index=False)
 ratings.to_csv('ratings.csv', index=False)
@@ -211,62 +180,134 @@ games['Game Name'] = games['Game Name'].apply(lambda x: x.split(maxsplit=1)[1] i
 # make an exeption for play station because it is only 2 numbers foe their naming convention.
 games['Game Name'] = games.apply(lambda row: row['Game Name'].split(maxsplit=1)[1] if row['Console Name'] == 'PS' and len(row['Game Name'].split(maxsplit=1)[0]) == 2 and row['Game Name'].split(maxsplit=1)[0].isdigit() else row['Game Name'], axis=1)
 
+# Keep for future referance.
+# Function to replace misspelled words in a text
+# def replace_misspelled(text):
+#     words = text.split()
+#     corrected_words = []
+#     for word in words:
+#         if not spell_checker.check(word):
+#             suggestions = spell_checker.suggest(word)
+#             if suggestions:
+#                 corrected_word = suggestions[0]
+#             else:
+#                 corrected_word = word
+#         else:
+#             corrected_word = word
+#         corrected_words.append(corrected_word)
+#     return ' '.join(corrected_words)
+
+def replace_roman_numerals(sentence):
+    words = sentence.split()
+
+    updated_words = []
+    for word in words:
+        try:
+            number = roman.fromRoman(word.upper())
+            updated_words.append(str(number))
+        except roman.InvalidRomanNumeralError:
+            updated_words.append(word)
+
+    updated_sentence = ' '.join(updated_words)
+    return updated_sentence
+
+ratings['Game Name'] = ratings['Game Name'].apply(replace_roman_numerals)
+games['Game Name'] = games['Game Name'].apply(replace_roman_numerals)
+
 # remove all spaces 
 games['Game Name'] = games['Game Name'].str.replace(' ', '')
 ratings['Game Name'] = ratings['Game Name'].str.replace(' ', '')
 
-# make all lower case
-games['Game Name'] = games['Game Name'].str.lower()
-ratings['Game Name'] = ratings['Game Name'].str.lower()
 
 # Merge the data frames based on matching values
 merged_df = pd.merge(games, ratings, left_on=['Console Name', 'Console Name'], right_on=['Console Name', 'Console Name'])
 merged_df = merged_df[merged_df['Game Name_x'].str[-1] == merged_df['Game Name_y'].str[-1]]
 
 
-print(merged_df)
-
 merged_df['similarity'] = merged_df.apply(lambda row: fuzz.ratio(row['Game Name_x'], row['Game Name_y']), axis=1)
 
 # Sort the DataFrame by 'Game Name_y' and 'similarity' columns in descending order
 sorted_df = merged_df.sort_values(['similarity'], ascending=[False])
 
-# sorted_df = sorted_df[sorted_df['similarity'] > 99]
-
-sorted_df.to_csv("sorted_df_original_name.csv", index=False)
-
+sorted_df = sorted_df[sorted_df['similarity'] > 99]
 
 # Keep only the first occurrence of each game's original name
 filtered_df = sorted_df.drop_duplicates(subset='Original Name', keep='first')
 
-filtered_df.to_csv('result_df.csv', index=False)
+# filtered_df.to_csv('result_df.csv', index=False)
+# filtered_df.to_json('games_raiting_matched_sililarity_100.json', orient='records')
 
+# print(filtered_df)
 
-# merged_df = merged_df[merged_df['similarity'] > 0]
-# merged_df.to_csv('merged_df.csv', index=False)
-# # Sort the DataFrame by 'similarity' column in descending order
-# sorted_df = merged_df.sort_values('similarity', ascending=False)
-# sorted_df = sorted_df[sorted_df['similarity'] > 20]
-# sorted_df.to_csv('sorted_df.csv', index=False)
-# print(sorted_df)
+# Group the DataFrame by 'Console Name'
+grouped = filtered_df.groupby('Console Name')
 
-# # Group the DataFrame by the unique combinations of 'Game Name_x' and 'Game Name_y'
-# grouped_df = sorted_df.groupby(['Game Name_x', 'Game Name_y'])
-# # print(grouped_df)
+def wilson_score(rating, total_ratings, z=1.96):
+    # Check if total_ratings is zero
+    if total_ratings == 0:
+        return 0  # Return a score of 0 when total_ratings is zero
+    
+    # Calculate the proportion of positive ratings
+    positive_proportion = rating / 100
+    
+    # Calculate the Wilson score interval
+    expr = positive_proportion * (1 - positive_proportion) + z * z / (4 * total_ratings)
+    sqrt_expr = math.sqrt(expr) if expr >= 0 else 0
+    
+    score = (positive_proportion + z*z / (2*total_ratings) - z * sqrt_expr) / (1 + z*z / total_ratings)
+    
+    return score
 
-# # Initialize an empty DataFrame to store the filtered results
-# filtered_df = pd.DataFrame(columns=sorted_df.columns)
+def weighted_average(rating, rating_count, total_ratings):
+    weight = rating_count / total_ratings
+    weighted_avg = rating * weight
+    return weighted_avg
 
-# # Iterate over the groups and keep the unique occurrences with the highest similarity
-# for group_name, group_data in grouped_df:
-#     max_similarity = group_data['similarity'].max()
-#     best_matches = group_data[group_data['similarity'] == max_similarity]
-#     filtered_df = pd.concat([filtered_df, best_matches], ignore_index=True)
+# Create an empty dictionary to store the dataframes
+group_dataframes = {}
 
-# # Print the filtered DataFrame
-# # print(filtered_df)
-# filtered_df.to_csv('filtered_df.csv', index=False)
+# Calculate the weighted average for each game within each console
+for group_name, group_data in grouped:
+    # print("Group:", group_name)
+    
+    group_df = pd.DataFrame(columns=['Original Name', 'rating', 'Weighted Average'])
+    # Calculate the Wilson score for each game in the current group
+    for index, row in group_data.iterrows():
+        game_name = row['Original Name']
+        rating = row['rating']
+        total_ratings = row['rating_count']
+        
+        weighted_ave = weighted_average(rating, total_ratings, group_data['rating_count'].sum())
+        # Append the result to the group dataframe
+        group_df = pd.concat([group_df, pd.DataFrame({'Original Name': [game_name], 'rating': [rating], 'Weighted Average': [weighted_ave]})], ignore_index=True)
+        
+        # print("Game:", game_name)
+        # print("Wilson Score:", weighted_ave)
+        # print("---")
 
+    # Store the group dataframe in the dictionary
+    group_dataframes[group_name] = group_df
 
+# Access and work with dataframes in the dictionary
+for group_name, group_df in group_dataframes.items():
+    print("Group:", group_name)
+
+    # Perform operations on the dataframe
+    # For example, you can sort the dataframe by the Wilson Score column in descending order
+    sorted_df = group_df.sort_values(by='Weighted Average', ascending=False)
+    sorted_df = sorted_df.reset_index(drop=True)
+
+    # Create a new column based on the updated index values
+    sorted_df['New Rank'] = sorted_df.index.map(lambda x: str(x + 1).zfill(3))
+
+    # Perform operations on the dataframe
+    sorted_df['New Name and Rank'] = sorted_df['New Rank'] + ' ' + sorted_df['Original Name']
+
+    # Print the sorted dataframe
+    print("Sorted", group_name, "DataFrame:")
+    print(sorted_df)
+    print("---")
+
+# print(sorted_dataframes)
 
 
