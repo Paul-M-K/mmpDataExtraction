@@ -22,8 +22,8 @@ def game_dataframe(directory):
                     if folder == folder_name:
                         # check for leading numbers
                         directory = (f'{root}\{folder}\{file}')
-                        data.append([directory, folder, file])
-    df = pd.DataFrame(data, columns=['Directory', 'Console', 'Game'])
+                        data.append([directory, folder, file, file])
+    df = pd.DataFrame(data, columns=['Directory', 'Console', 'Original Name', 'Game'])
     return df
 
 df = game_dataframe(directory)
@@ -38,6 +38,9 @@ strings_to_drop = ['.jpg','Imgs', '_libretro', '.cfg','.smsplus' ]
 for string in strings_to_drop:
     df = df[~df['Game'].str.contains(string)]
 
+df['Game'] = df['Game'].apply(lambda x: x.rsplit(".", 1)[0])
+df['Game'] = df['Game'].str.strip()
 
-df.to_csv('Directory_Games.csv', index=False)
+df.to_json('13_GameDirectory.json', orient='records')
+df.to_csv(('13_GameDirectory.csv'))
 
