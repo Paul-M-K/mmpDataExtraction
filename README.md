@@ -7,11 +7,13 @@ The [Miyoo Mini Plus](https://www.keepretro.com/products/miyoo-mini-plus) (MMP) 
 1) [X] Generate a list of games for the Miyoo Mini Plus:
 A comprehensive list of games for the 64GB can be accessed [here](https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fraw.githubusercontent.com%2FPaul-M-K%2FmmpDataExtraction%2Fmaster%2Fparsed_data.xlsx&wdOrigin=BROWSELINK).
 
-2) Reorganize games based on user ratings:
+2) [X] Reorganize games based on user ratings:
 The main objective of this project is to reorganize the games and rank them based on user ratings obtained from [IGBD](https://www.igdb.com/) (Internet Game Database).
 
-3) Sort games into correct folders for [Onion OS](https://github.com/OnionUI/Onion):
+3) [X]  Sort games into correct folders for [Onion OS](https://github.com/OnionUI/Onion):
 The games will be sorted into the appropriate folders within Onion OS. Although this process is relatively quick, there may be certain anomalies to address, such as the Game Boy Color folder being located within the Game Boy folder.
+
+4) turn this into a small application so anyone can download the executable file and run their game library through it.
 
 By achieving these goals, I aim to enhance the user experience of the Miyoo Mini Plus by ensuring that the vast game library is properly organized and easily accessible.
 
