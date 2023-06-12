@@ -1,13 +1,9 @@
 import os
-import json
+# import json
 import pandas as pd
 import roman
 import re
-import enchant
 import math
-from spellchecker import SpellChecker
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
 from fuzzywuzzy import fuzz
 
 # Load the JSON file into a pandas DataFrame
@@ -124,10 +120,6 @@ for group_name, group_data in grouped:
         weighted_ave = weighted_average(rating, total_ratings, group_data['rating_count'].sum())
         # Append the result to the group dataframe
         weighted_df = pd.concat([weighted_df, pd.DataFrame({'Directory': [directory_name],'Original Name': [game_name], 'rating': [rating], 'Weighted Average': [weighted_ave]})], ignore_index=True)
-        
-        # print("Game:", game_name)
-        # print("Wilson Score:", weighted_ave)
-        # print("---")
 
     # Store the group dataframe in the dictionary
     group_dataframes[group_name] = weighted_df
