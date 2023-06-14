@@ -6,7 +6,7 @@ import re
 import math
 from fuzzywuzzy import fuzz
 
-def main():
+def merge():
     # Load the JSON file into a pandas DataFrame
     games = pd.read_json('13_GameDirectory.json')
     ratings = pd.read_json('14.3_GameRatingConsolesJoined.json')
@@ -108,7 +108,6 @@ def main():
     
     # Calculate the weighted average for each game within each console
     for group_name, group_data in grouped:
-        # print("Group:", group_name)
         
         weighted_df = pd.DataFrame(columns=['Directory','Original Name', 'rating', 'Weighted Average'])
         # Calculate the Wilson score for each game in the current group
@@ -133,8 +132,6 @@ def main():
         old_path = os.path.join(folder_path, old_file)
         new_path = os.path.join(folder_path, new_name)
     
-        # print(old_path)
-    
         # # Check if the new file name already exists
         if os.path.exists(new_path):
             # File with the new name already exists, skip renaming
@@ -145,7 +142,6 @@ def main():
     
     # Access and work with dataframes in the dictionary
     for group_name, group_df in group_dataframes.items():
-        # print("Group:", group_name)
     
         # Perform operations on the dataframe
         # For example, you can sort the dataframe by the Wilson Score column in descending order
@@ -164,6 +160,9 @@ def main():
             new_name = row['New Name and Rank']
             rename_files(directory,old_name,new_name)
 
+def main():
+    merge()
+
 if __name__ == '__main__':
-   main() 
+    main()
 

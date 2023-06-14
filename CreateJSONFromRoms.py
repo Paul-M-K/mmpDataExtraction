@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import sys
+
     
 def game_dataframe(directory):
     data = []
@@ -19,8 +20,8 @@ def game_dataframe(directory):
                     # split the files into their parts
                     if folder == folder_name:
                         # check for leading numbers
-                        directory = (root+folder+file)
-                        print(directory)
+                        root = root.replace("/", "\\")
+                        directory = (root+"\\"+folder+"\\"+file)
                         data.append([directory, folder, file, file])
     df = pd.DataFrame(data, columns=['Directory', 'Console', 'Original Name', 'Game'])
     return df
@@ -35,7 +36,7 @@ def main():
     # Clean dataframe
     # Drop duplicates based on all columns
     df.drop_duplicates(inplace=True)
-
+    # df["Directory"] = df["Directory"].str.replace("\\", "",regex=False)
     strings_to_drop = ['.jpg','Imgs', '_libretro', '.cfg','.smsplus' ]
 
     #drop all unneeded strings

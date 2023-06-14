@@ -1,9 +1,3 @@
-# import MoveFoldersUpOneDirectory
-# import RenameRomsWithNumbersInFront
-# import CreateJSONFromRoms
-# import PullNewDataFromAPI
-# import CombineRomsAndRatings
-
 import PySimpleGUI as sg
 import subprocess
 
@@ -31,9 +25,6 @@ def run_gui():
             folder = values["-FOLDER-"]
             window["-FOLDER-"].update(folder)
 
-    # Close the window
-    window.close()
-
     # Access the selected folder as a string
     selected_folder = values["-FOLDER-"]
 
@@ -45,8 +36,13 @@ def main():
 
     # Pass the selected_folder to other scripts using subprocess
     # For example, to execute another script, you can use:
-    # subprocess.run(["python", "MoveFoldersUpOneDirectory.py", selected_folder])
-    # subprocess.run(["python", "RenameRomsWithNumbersInFront.py", selected_folder])
+    subprocess.run(["python", "MoveFoldersUpOneDirectory.py", selected_folder])
+    subprocess.run(["python", "RenameRomsWithNumbersInFront.py", selected_folder])
     subprocess.run(["python", "CreateJSONFromRoms.py", selected_folder])
+    subprocess.run(["python", "CombineRomsAndRatings.py"])
+
+    # Display a message after all subprocesses have finished
+    sg.popup('All processes have finished.')
+
 if __name__ == '__main__':
     main()
