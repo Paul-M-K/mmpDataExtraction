@@ -160,9 +160,9 @@ def merge():
             new_name = row['New Name and Rank']
             rename_files(directory,old_name,new_name)
 
-def main():
-    merge()
+# def main():
+#     merge()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 

@@ -18,10 +18,10 @@ def move_folder(directory):
                 shift_directory(root, folder)
             
 
-def main():
-    selected_folder = sys.argv[1]  # Access the selected_folder value from command-line arguments
-    move_folder(selected_folder)
+# def main():
+#     selected_folder = sys.argv[1]  # Access the selected_folder value from command-line arguments
+#     move_folder(selected_folder)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 

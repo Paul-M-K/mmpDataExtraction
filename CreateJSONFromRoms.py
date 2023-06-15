@@ -24,15 +24,7 @@ def game_dataframe(directory):
                         directory = (root+"\\"+folder+"\\"+file)
                         data.append([directory, folder, file, file])
     df = pd.DataFrame(data, columns=['Directory', 'Console', 'Original Name', 'Game'])
-    return df
-
-
-
-def main():
-    selected_folder = sys.argv[1]  # Access the selected_folder value from command-line arguments
     
-    df = game_dataframe(selected_folder)
-
     # Clean dataframe
     # Drop duplicates based on all columns
     df.drop_duplicates(inplace=True)
@@ -48,6 +40,10 @@ def main():
 
     df.to_json('13_GameDirectory.json', orient='records')
 
-if __name__ == '__main__':
-    main()
+    
+# def main():
+
+
+# if __name__ == '__main__':
+#     main()
 
