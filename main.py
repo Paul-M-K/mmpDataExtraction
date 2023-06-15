@@ -1,14 +1,25 @@
-import PySimpleGUI as sg
+"""
+This module contains functions for performing specific tasks.
+"""
+
 import os
 import shutil
-import pandas as pd
-import roman
 import re
+import roman
+import PySimpleGUI as sg
+import pandas as pd
+
 # import math
 from fuzzywuzzy import fuzz
 
 def run_gui():
-    # Define the layout of your GUI
+    """
+    This will run the GUI
+    Args:
+        No arguments requires.
+    Returns:
+        the result is the selected folder for where the roms are stored.
+    """
     layout = [
         [sg.Text("Select a folder:")],
         [sg.Input(key="-FOLDER-"), sg.FolderBrowse()],
@@ -153,13 +164,15 @@ def game_dataframe(directory):
     df['Game'] = df['Game'].apply(lambda x: x.rsplit(".", 1)[0])
     df['Game'] = df['Game'].str.strip()
 
-    df.to_json('13_GameDirectory.json', orient='records')
+    # df.to_json('13_GameDirectory.json', orient='records')
+    return df
 
 ## --- CombineRomsAndRatings ---
 
-def merge():
+def merge(df):
     # Load the JSON file into a pandas DataFrame
-    games = pd.read_json('13_GameDirectory.json')
+    # games = pd.read_json('13_GameDirectory.json')
+    games = pd.DataFrame(df)
     ratings = pd.read_json('14.3_GameRatingConsolesJoined.json')
     
     # Drop duplicate data in both data frames
@@ -315,16 +328,10 @@ def main():
     # Execute GUI.py and capture the selected folder
     selected_folder = run_gui()
 
-    # Pass the selected_folder to other scripts using subprocess
-    # For example, to execute another script, you can use:
-    # subprocess.run(["python", "MoveFoldersUpOneDirectory.py", selected_folder])
-    # subprocess.run(["python", "RenameRomsWithNumbersInFront.py", selected_folder])
-    # subprocess.run(["python", "CreateJSONFromRoms.py", selected_folder])
     move_folder(selected_folder)
     find_files(selected_folder)
-    game_dataframe(selected_folder)
-    merge()
-    # subprocess.run(["python", "CombineRomsAndRatings.py"])
+    df = pd.DataFrame(game_dataframe(selected_folder))
+    merge(df)
 
     # Display a message after all subprocesses have finished
     sg.popup('All processes have finished.')
