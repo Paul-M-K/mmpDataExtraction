@@ -6,6 +6,8 @@ import os
 import shutil
 import re
 import roman
+import json
+from data import json_data
 import PySimpleGUI as sg
 import pandas as pd
 
@@ -173,7 +175,8 @@ def merge(df):
     # Load the JSON file into a pandas DataFrame
     # games = pd.read_json('13_GameDirectory.json')
     games = pd.DataFrame(df)
-    ratings = pd.read_json('14.3_GameRatingConsolesJoined.json')
+    json_string = json.dumps(json_data)
+    ratings = pd.read_json(json_string)
     
     # Drop duplicate data in both data frames
     games = games.drop_duplicates()
